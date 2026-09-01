@@ -1,0 +1,5481 @@
+<!DOCTYPE html>
+<!-- saved from url=(0089)file:///C:/Users/argha%20mitra/Pictures/Samsung%20Flow/business-accounts-glass-4-2-1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<title>Business Accounts</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./new Accounts_files/css2" rel="stylesheet">
+
+<style>
+/* =========================================================
+   DESIGN TOKENS — light, colourful, true glass
+
+   Palette   — a bright drifting colour-mesh background
+               (grenadine / lavender / peach / mint) so the
+               glass has real light and colour to bend. The
+               glass itself is built like an actual pane:
+               a saturated blur, a bright top specular
+               highlight, a bevelled double-ring border, and
+               a real drop shadow underneath for thickness —
+               not a flat white tint.
+
+     --grenadine  #E8385F   hero accent
+     --lavender   #8B7BFA   secondary accent
+     --peach      #FFB199   warm light source
+     --mint       #2FD9A8   credit / positive accent
+     --cream      #FBF7F4   background base
+
+   Type      — Space Grotesk (display), Plus Jakarta Sans
+               (body/UI), IBM Plex Mono (tabular figures).
+
+   Layout    — thick glass cards floating over a drifting
+               gradient mesh. One signature moment: the
+               mesh drift + a single load-in reveal.
+========================================================= */
+
+:root {
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+    /* Brand palette */
+    --grenadine: #E8385F;
+    --grenadine-2: #C22548;
+    --lavender: #8B7BFA;
+    --lavender-2: #6C5CE7;
+    --peach: #FFB199;
+    --mint: #2FD9A8;
+    --butter: #FFD166;
+    --cream: #FBF7F4;
+
+    --text-hi: #241922;
+    --text-mid: #6B5A62;
+    --text-low: #9C8B92;
+
+    --dr: var(--grenadine-2);
+    --dr-2: var(--grenadine);
+    --cr: var(--lavender-2);
+    --cr-2: var(--lavender);
+
+    --sunset: linear-gradient(120deg, var(--grenadine) 0%, var(--lavender) 100%);
+
+    --radius: 24px;
+    --radius-sm: 17px;
+
+    /* ---- GLASS RECIPE ----
+       A refined pane edge needs more than one flat outline:
+       (1) a crisp low-opacity outer hairline that defines
+       the exact silhouette, (2) a bright 1px bevel catching
+       light on the top-left, (3) a soft dark bevel on the
+       bottom-right where light falls away, (4) a faint
+       chromatic fringe — a whisper of warm/cool colour just
+       outside the edge, the way real glass disperses light
+       at its rim, (5) a real cast shadow for lift. */
+    --glass-tint: rgba(255,255,255,0.24);
+    --glass-tint-hi: rgba(255,255,255,0.4);
+    --glass-blur: blur(20px) saturate(200%) brightness(1.04);
+
+    --edge-hairline: rgba(255,255,255,0.55);
+    --edge-bevel-hi: rgba(255,255,255,0.95);
+    --edge-bevel-lo: rgba(90,40,70,0.28);
+    --edge-fringe-warm: rgba(255,177,153,0.5);
+    --edge-fringe-cool: rgba(139,123,250,0.45);
+
+    --shadow-glass:
+        0 0 0 1px var(--edge-hairline),
+        0 1.5px 0 var(--edge-bevel-hi) inset,
+        1px 0 0 var(--edge-bevel-hi) inset,
+        -1px 0 0 var(--edge-bevel-lo) inset,
+        0 -1.5px 0 var(--edge-bevel-lo) inset,
+        0 18px 40px -14px rgba(90,40,70,0.35),
+        0 4px 10px -4px rgba(90,40,70,0.2);
+
+    --shadow-glass-hover:
+        0 0 0 1px var(--edge-hairline),
+        0 0 0 2.5px var(--edge-fringe-warm),
+        0 1.5px 0 var(--edge-bevel-hi) inset,
+        1px 0 0 var(--edge-bevel-hi) inset,
+        -1px 0 0 var(--edge-bevel-lo) inset,
+        0 -1.5px 0 var(--edge-bevel-lo) inset,
+        0 26px 52px -16px rgba(90,40,70,0.42),
+        0 6px 14px -6px rgba(90,40,70,0.26);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--cream);
+    color: var(--text-hi);
+    font-family: "Plus Jakarta Sans", sans-serif;
+    padding-bottom: calc(78px + var(--safe-bottom));
+    position: relative;
+    overflow-x: hidden;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+button {
+    touch-action: manipulation;
+}
+
+.mono {
+    font-family: "IBM Plex Mono", monospace;
+}
+
+::selection {
+    background: var(--grenadine);
+    color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *:not(.mesh-bg span) { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+/* =========================================================
+   BACKGROUND MESH — vivid, saturated, drifting
+   This is the one animated moment. Bright colour pools so
+   every glass panel above has real light to bend and tint.
+========================================================= */
+
+.mesh-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: var(--cream);
+}
+
+.mesh-bg span {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    will-change: transform;
+}
+
+.mesh-bg .b1 {
+    width: 50vw;
+    height: 50vw;
+    top: -18vw;
+    left: -14vw;
+    background: var(--grenadine);
+    opacity: 0.55;
+    animation: drift1 90s ease-in-out infinite;
+}
+
+.mesh-bg .b2 {
+    width: 44vw;
+    height: 44vw;
+    bottom: -18vw;
+    right: -12vw;
+    background: var(--lavender);
+    opacity: 0.55;
+    animation: drift2 105s ease-in-out infinite;
+}
+
+.mesh-bg .b3 {
+    width: 36vw;
+    height: 36vw;
+    top: 26%;
+    left: 52%;
+    background: var(--peach);
+    opacity: 0.5;
+    animation: drift3 95s ease-in-out infinite;
+}
+
+.mesh-bg .b4 {
+    width: 30vw;
+    height: 30vw;
+    bottom: 10%;
+    left: 4%;
+    background: var(--mint);
+    opacity: 0.4;
+    animation: drift2 80s ease-in-out infinite reverse;
+}
+
+.mesh-bg .b5 {
+    width: 24vw;
+    height: 24vw;
+    top: 55%;
+    right: 30%;
+    background: var(--butter);
+    opacity: 0.32;
+    animation: drift3 120s ease-in-out infinite reverse;
+}
+
+@keyframes drift1 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    25% { transform: translate(40vw, 30vw) scale(1.25); }
+    50% { transform: translate(65vw, 55vw) scale(1.1); }
+    75% { transform: translate(25vw, 60vw) scale(0.9); }
+}
+
+@keyframes drift2 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    25% { transform: translate(-45vw, -35vw) scale(1.2); }
+    50% { transform: translate(-70vw, -15vw) scale(0.95); }
+    75% { transform: translate(-30vw, -55vw) scale(1.1); }
+}
+
+@keyframes drift3 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    25% { transform: translate(-35vw, 40vw) scale(0.85); }
+    50% { transform: translate(-55vw, -20vw) scale(1.15); }
+    75% { transform: translate(-15vw, -45vw) scale(0.95); }
+}
+
+.mesh-bg .grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* =========================================================
+   SVG GLASS DISTORTION FILTER
+   A feTurbulence + feDisplacementMap filter applied to the
+   card's ::after pseudo-element, so the backdrop actually
+   warps slightly through the glass the way real cast glass
+   distorts what's behind it — not just blur.
+========================================================= */
+
+/* =========================================================
+   LOAD-IN REVEAL — one orchestrated moment
+========================================================= */
+
+@keyframes riseIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.app-header,
+.tabs-wrapper,
+#content {
+    animation: riseIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+.tabs-wrapper { animation-delay: 0.05s; }
+#content { animation-delay: 0.1s; }
+
+/* =========================================================
+   APP SHELL
+========================================================= */
+
+.app-header {
+    background: transparent;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding-top: var(--safe-top);
+}
+
+.app-header-inner {
+    width: 100%;
+    max-width: 1240px;
+    margin: auto;
+    padding: 20px 16px 12px;
+}
+
+.app-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    background: var(--sunset);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.app-subtitle {
+    color: var(--text-low);
+    font-size: 12px;
+    margin-top: 3px;
+    font-weight: 500;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1240px;
+    margin: auto;
+    padding: 12px 16px 16px;
+}
+
+/* =========================================================
+   BUTTONS — small glass pucks
+========================================================= */
+
+.btn {
+    min-height: 46px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: none;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--glass-tint-hi);
+    color: var(--text-hi);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow:
+        0 1px 0 rgba(255,255,255,0.9) inset,
+        0 -1px 0 rgba(120,70,95,0.18) inset,
+        0 8px 18px -6px rgba(90,40,70,0.28);
+    position: relative;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+    transform: none;
+}
+
+.btn-primary {
+    background: var(--sunset);
+    color: #ffffff;
+    box-shadow:
+        0 1px 0 rgba(255,255,255,0.5) inset,
+        0 10px 22px -6px rgba(232,56,95,0.5);
+}
+
+.btn-primary:hover {
+    box-shadow:
+        0 1px 0 rgba(255,255,255,0.5) inset,
+        0 12px 26px -6px rgba(232,56,95,0.58);
+}
+
+.btn-secondary {
+    background: var(--glass-tint);
+    color: var(--text-hi);
+}
+
+.btn-secondary:hover {
+    background: var(--glass-tint-hi);
+}
+
+.btn-danger {
+    background: var(--grenadine-2);
+    color: #ffffff;
+    box-shadow:
+        0 1px 0 rgba(255,255,255,0.35) inset,
+        0 10px 20px -6px rgba(194,37,72,0.5);
+}
+
+.btn-danger:hover {
+    background: #a81f3d;
+}
+
+.btn-small {
+    min-height: 40px;
+    padding: 8px 14px;
+    font-size: 12px;
+}
+
+/* =========================================================
+   CARDS — thick 3D glass panels
+
+   Built like a physical pane sitting above the page: the
+   base tint + blur do the "seeing through frosted glass"
+   part; ::before lays a bright specular streak across the
+   top-left, the way light catches a bevelled edge; the
+   layered box-shadow gives the top edge a bright rim, the
+   bottom edge a dark rim, and the whole card a real cast
+   shadow so it reads as sitting proud of the page, not
+   printed onto it.
+========================================================= */
+
+.card {
+    background: var(--glass-tint);
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card::before {
+    /* specular highlight, tight to the top-left corner —
+       a bevel catching light, not a broad diagonal wash */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: 46%;
+    background: radial-gradient(
+        ellipse at top left,
+        rgba(255,255,255,0.5) 0%,
+        rgba(255,255,255,0.14) 38%,
+        rgba(255,255,255,0) 70%
+    );
+    pointer-events: none;
+}
+
+.card::after {
+    /* faint bottom-edge refraction tint, like light bending
+       through the thickness of the glass at its base */
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 34%;
+    background: linear-gradient(
+        to top,
+        rgba(120,70,95,0.09),
+        rgba(120,70,95,0) 100%
+    );
+    pointer-events: none;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-glass-hover);
+}
+
+.card-padding {
+    padding: 18px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.field-label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-mid);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.input,
+.select {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: var(--radius-sm);
+    color: var(--text-hi);
+    font-size: 16px; /* prevents iOS auto-zoom on focus */
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.7) inset;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.input::placeholder {
+    color: var(--text-low);
+}
+
+.select {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c22548' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+    padding-right: 36px;
+}
+
+.select option {
+    background: #ffffff;
+    color: var(--text-hi);
+}
+
+.input:focus,
+.select:focus {
+    border-color: var(--grenadine);
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 0 0 3px rgba(232,56,95,0.18), 0 1px 0 rgba(255,255,255,0.7) inset;
+}
+
+.help {
+    margin-top: 5px;
+    font-size: 11px;
+    color: var(--text-low);
+    line-height: 1.4;
+}
+
+/* =========================================================
+   NAVIGATION — thick glass segmented pill
+========================================================= */
+
+.tabs-wrapper {
+    background: var(--glass-tint);
+    border: none;
+    border-radius: 999px;
+    overflow-x: auto;
+    margin: 0 auto 16px;
+    display: flex;
+    justify-content: center;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow-glass);
+    padding: 5px;
+    position: relative;
+}
+
+.tabs-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    min-width: max-content;
+    width: 100%;
+    gap: 4px;
+}
+
+.tab {
+    border: 0;
+    background: transparent;
+    color: var(--text-low);
+    padding: 10px 16px;
+    min-height: 40px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    text-align: center;
+    transition: background 0.25s cubic-bezier(0.16,1,0.3,1), color 0.25s ease, transform 0.15s ease;
+}
+
+.tab:active {
+    transform: scale(0.96);
+}
+
+.tab.active {
+    color: #ffffff;
+    background: var(--sunset);
+    box-shadow: 0 4px 14px rgba(232,56,95,0.35), 0 1px 0 rgba(255,255,255,0.4) inset;
+}
+
+.tab:not(.active):active {
+    background: var(--glass-tint-hi);
+}
+
+/* =========================================================
+   PAGE HEADERS
+========================================================= */
+
+.page-header {
+    margin-bottom: 16px;
+}
+
+.page-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-hi);
+}
+
+.page-description {
+    color: var(--text-low);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+/* =========================================================
+   TAB INFO BAR — thick glass panel
+========================================================= */
+
+.tab-info-bar {
+    position: relative;
+    margin: 14px 0 18px;
+    padding: 18px 20px;
+    border-radius: var(--radius);
+    background: var(--glass-tint);
+    border: none;
+    box-shadow: var(--shadow-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    overflow: hidden;
+}
+
+.tab-info-bar::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 60%;
+    background: radial-gradient(
+        ellipse at top left,
+        rgba(255,255,255,0.45) 0%,
+        rgba(255,255,255,0.12) 38%,
+        rgba(255,255,255,0) 70%
+    );
+    pointer-events: none;
+}
+
+.tab-info-head {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.tab-info-icon-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.tab-info-icon {
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: var(--sunset);
+    box-shadow: 0 6px 16px rgba(232,56,95,0.35), 0 1px 0 rgba(255,255,255,0.5) inset;
+}
+
+.tab-info-icon svg {
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    stroke: currentColor;
+    stroke-width: 2.5;
+}
+
+.tab-info-headline {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-hi);
+    line-height: 1.2;
+}
+
+.tab-info-kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--grenadine-2);
+    margin-bottom: 2px;
+}
+
+.tab-info-actions {
+    display: flex;
+    gap: 8px;
+    flex: none;
+    position: relative;
+}
+
+.tab-info-actions .btn {
+    min-height: 38px;
+    padding: 8px 16px;
+    font-size: 12px;
+}
+
+.tab-info-bullets {
+    position: relative;
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+}
+
+.tab-info-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-mid);
+    line-height: 1.45;
+}
+
+.tab-info-bullets li::before {
+    content: "";
+    flex: none;
+    width: 7px;
+    height: 7px;
+    margin-top: 6px;
+    border-radius: 2px;
+    background: var(--sunset);
+    transform: rotate(45deg);
+}
+
+@media (max-width: 640px) {
+    .tab-info-bar {
+        padding: 16px;
+    }
+
+    .tab-info-headline {
+        font-size: 17px;
+    }
+
+    .tab-info-actions {
+        width: 100%;
+    }
+
+    .tab-info-actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+/* =========================================================
+   DEALER BOX
+========================================================= */
+
+.dealer-box {
+    background: rgba(232,56,95,0.07);
+    border: 1px solid rgba(232,56,95,0.2);
+    border-left: 3px solid var(--grenadine);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+}
+
+.dealer-title {
+    font-family: "Space Grotesk", sans-serif;
+    color: var(--text-hi);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.dealer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.dealer-item {
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 14px;
+    padding: 10px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.7) inset;
+}
+
+.dealer-letter {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    background: var(--sunset);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dealer-main {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text-hi);
+    margin-top: 2px;
+}
+
+.dealer-side {
+    font-size: 10px;
+    color: var(--text-low);
+    margin-top: 2px;
+}
+
+/* =========================================================
+   JOURNAL ACCOUNT GUIDE
+========================================================= */
+
+.account-guide {
+    margin-top: 10px;
+    padding: 13px;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: var(--radius-sm);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.guide-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-hi);
+    margin-bottom: 8px;
+}
+
+.guide-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(36,25,34,0.08);
+    font-size: 12px;
+    color: var(--text-mid);
+}
+
+.guide-row:last-child {
+    border-bottom: 0;
+}
+
+.guide-dr {
+    color: var(--dr);
+    font-weight: 700;
+}
+
+.guide-cr {
+    color: var(--cr);
+    font-weight: 700;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    margin-bottom: 12px;
+    display: none;
+    border: 1px solid transparent;
+    font-weight: 600;
+}
+
+.status.error {
+    display: block;
+    background: rgba(194,37,72,0.13);
+    border-color: rgba(194,37,72,0.34);
+    color: var(--grenadine-2);
+}
+
+.status.success {
+    display: block;
+    background: rgba(47,217,168,0.16);
+    border-color: rgba(47,217,168,0.42);
+    color: #1f9d7d;
+}
+
+.status.info {
+    display: block;
+    background: rgba(139,123,250,0.13);
+    border-color: rgba(139,123,250,0.32);
+    color: var(--lavender-2);
+}
+
+/* =========================================================
+   SUMMARY CARDS — glass, same recipe as .card
+========================================================= */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.summary-card {
+    background: var(--glass-tint);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow-glass);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.summary-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 55%;
+    height: 50%;
+    background: radial-gradient(
+        ellipse at top left,
+        rgba(255,255,255,0.45) 0%,
+        rgba(255,255,255,0.12) 38%,
+        rgba(255,255,255,0) 70%
+    );
+    pointer-events: none;
+}
+
+.summary-card:hover {
+    box-shadow: var(--shadow-glass-hover);
+}
+
+.summary-label {
+    position: relative;
+    color: var(--text-low);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.summary-value {
+    position: relative;
+    margin-top: 6px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-hi);
+    word-break: break-word;
+}
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+}
+
+.table th {
+    background: rgba(139,123,250,0.14);
+    color: var(--text-mid);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 11px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.55);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.table td {
+    padding: 11px 10px;
+    font-size: 12.5px;
+    color: var(--text-mid);
+    border-bottom: 1px solid rgba(36,25,34,0.07);
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background: rgba(232,56,95,0.07);
+}
+
+.amount {
+    font-family: "IBM Plex Mono", monospace;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--text-hi);
+}
+
+.dr-text {
+    color: var(--dr);
+}
+
+.cr-text {
+    color: var(--cr);
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+.badge-asset {
+    background: rgba(139,123,250,0.18);
+    color: var(--lavender-2);
+    border-color: rgba(139,123,250,0.38);
+}
+
+.badge-liability {
+    background: rgba(232,56,95,0.13);
+    color: var(--grenadine-2);
+    border-color: rgba(232,56,95,0.32);
+}
+
+.badge-capital {
+    background: rgba(108,92,231,0.16);
+    color: var(--lavender-2);
+    border-color: rgba(108,92,231,0.34);
+}
+
+.badge-drawing {
+    background: rgba(255,177,153,0.3);
+    color: #b45536;
+    border-color: rgba(255,177,153,0.62);
+}
+
+.badge-income {
+    background: rgba(47,217,168,0.2);
+    color: #1f9d7d;
+    border-color: rgba(47,217,168,0.42);
+}
+
+.badge-expense {
+    background: rgba(255,209,102,0.3);
+    color: #916b0a;
+    border-color: rgba(255,209,102,0.58);
+}
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section-title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-hi);
+    border-bottom: 1px solid rgba(255,255,255,0.55);
+    padding-bottom: 9px;
+    margin-bottom: 12px;
+}
+
+.total-row {
+    background: rgba(139,123,250,0.13);
+    font-weight: 700;
+}
+
+.net-profit {
+    background: rgba(47,217,168,0.16);
+    border: 1px solid rgba(47,217,168,0.42);
+    color: #1f9d7d;
+}
+
+.net-loss {
+    background: rgba(232,56,95,0.13);
+    border: 1px solid rgba(232,56,95,0.34);
+    color: var(--grenadine-2);
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty {
+    text-align: center;
+    padding: 36px 15px;
+    color: var(--text-low);
+    font-size: 13px;
+}
+
+/* =========================================================
+   LOADING STATE
+========================================================= */
+
+.loading-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    color: var(--text-low);
+    font-size: 13px;
+    gap: 12px;
+}
+
+.spinner {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 3px solid rgba(36,25,34,0.1);
+    border-top-color: var(--grenadine);
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* =========================================================
+   BOTTOM ACTION DOCK (mobile / portrait) — thick glass
+========================================================= */
+
+.bottom-bar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(10px + var(--safe-bottom));
+    background: var(--glass-tint-hi);
+    border: none;
+    border-radius: 999px;
+    padding: 6px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    z-index: 100;
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow-glass);
+}
+
+.bottom-bar .btn {
+    width: 100%;
+    padding: 9px 5px;
+    min-height: 46px;
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 999px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.bottom-bar .btn:active {
+    background: rgba(255,255,255,0.55);
+}
+
+.bottom-bar .btn svg {
+    width: 17px;
+    height: 17px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .app-header-inner {
+        padding: 18px 14px 10px;
+    }
+
+    .main-container {
+        padding: 10px 12px 12px;
+    }
+
+    .card-padding {
+        padding: 15px;
+    }
+
+    .dealer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (orientation: landscape) and (max-width: 900px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .dealer-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* =========================================================
+   DESKTOP — "PC web mode"
+========================================================= */
+
+@media (min-width: 768px) {
+
+    body {
+        padding-bottom: 40px;
+    }
+
+    .bottom-bar {
+        display: none;
+    }
+
+    .app-header {
+        background: rgba(255,255,255,0.28);
+        backdrop-filter: blur(18px) saturate(160%);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        border-bottom: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .app-header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 16px;
+    }
+
+    .header-actions-desktop {
+        display: flex;
+        gap: 8px;
+    }
+
+    .tabs-wrapper {
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        margin-top: 14px;
+    }
+
+    .journal-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 360px;
+        gap: 18px;
+        align-items: start;
+    }
+
+    .summary-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .app-title {
+        font-size: 26px;
+    }
+
+    .app-subtitle {
+        font-size: 12.5px;
+    }
+
+    .page-title {
+        font-size: 22px;
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+    }
+
+    .btn-secondary:hover,
+    .btn-danger:hover {
+        transform: translateY(-1px);
+    }
+
+    .tab {
+        padding: 11px 20px;
+        font-size: 13px;
+    }
+}
+
+.header-actions-desktop {
+    display: none;
+}
+
+/* =========================================================
+   ORIENTATION HELPER CLASSES (set via JS)
+========================================================= */
+
+body.is-landscape .journal-layout {
+    grid-template-columns: minmax(0, 1fr) 320px;
+}
+
+body.is-portrait.is-mobile .summary-grid {
+    grid-template-columns: 1fr 1fr;
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+    .mesh-bg {
+        display: none;
+    }
+
+    body {
+        background: #ffffff;
+        color: #111;
+        padding-bottom: 0;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        backdrop-filter: none;
+        background: #fff;
+    }
+
+    .card::before,
+    .card::after {
+        display: none;
+    }
+
+    .main-container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .table {
+        min-width: 0;
+    }
+}
+</style>
+</head>
+
+<body class="is-landscape">
+
+<!-- Fixed animated gradient mesh — the one signature moment -->
+<div class="mesh-bg no-print" aria-hidden="true">
+    <span class="b1"></span>
+    <span class="b2"></span>
+    <span class="b3"></span>
+    <span class="b4"></span>
+    <span class="b5"></span>
+    <div class="grain"></div>
+</div>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="app-header no-print">
+    <div class="app-header-inner">
+
+        <div>
+            <div class="app-title">Business Accounts</div>
+            <div class="app-subtitle">
+                Double-entry accounting, made to look good
+            </div>
+        </div>
+
+        <div class="header-actions-desktop">
+
+            <button class="btn btn-secondary btn-small" onclick="exportCSV()">
+                Export
+            </button>
+
+            <button class="btn btn-secondary btn-small" onclick="printStatements()">
+                Print
+            </button>
+
+            <button class="btn btn-danger btn-small" onclick="resetData()">
+                Reset
+            </button>
+
+        </div>
+
+    </div>
+</header>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main-container">
+
+    <!-- NAVIGATION -->
+
+    <div class="tabs-wrapper no-print">
+        <div class="tabs">
+
+            <button id="tab-journal" class="tab active" onclick="switchTab(&#39;journal&#39;)">
+                Journal
+            </button>
+
+            <button id="tab-ledger" class="tab" onclick="switchTab(&#39;ledger&#39;)">
+                Ledger
+            </button>
+
+            <button id="tab-trial" class="tab" onclick="switchTab(&#39;trial&#39;)">
+                Trial Balance
+            </button>
+
+            <button id="tab-income" class="tab" onclick="switchTab(&#39;income&#39;)">
+                P&amp;L
+            </button>
+
+            <button id="tab-balance" class="tab" onclick="switchTab(&#39;balance&#39;)">
+                Balance Sheet
+            </button>
+
+            <button id="tab-accounts" class="tab" onclick="switchTab(&#39;accounts&#39;)">
+                Accounts
+            </button>
+
+            <button id="tab-info" class="tab" onclick="switchTab(&#39;info&#39;)">
+                Info
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- TAB INFO BAR — headline, bullets, quick actions -->
+
+    <div id="tabInfoBar" class="no-print">
+
+        <div class="tab-info-bar">
+
+            <div class="tab-info-head">
+
+                <div class="tab-info-icon-wrap">
+
+                    <div class="tab-info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+                        </svg>
+                    </div>
+
+                    <div>
+                        <div class="tab-info-kicker">Step 1</div>
+                        <div class="tab-info-headline">Journal Entry</div>
+                    </div>
+
+                </div>
+
+                <div class="tab-info-actions">
+
+                    <button class="btn btn-secondary" onclick="exportCSV()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+                        Export
+                    </button>
+
+                    <button class="btn btn-danger" onclick="resetData()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M3 6h18"></path><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path></svg>
+                        Reset
+                    </button>
+
+                </div>
+
+            </div>
+
+            <ul class="tab-info-bullets">
+                <li>Records every transaction as it happens, in date order.</li><li>Applies the DEALER rule to decide which account is debited and which is credited.</li><li>Feeds every other tab — nothing else calculates until an entry exists here.</li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div id="content">
+
+        <div class="page-header">
+            <div class="page-title">
+                Journal Entry
+            </div>
+
+            <div class="page-description">
+                Record every business transaction using double-entry bookkeeping.
+            </div>
+        </div>
+
+
+        <div class="journal-layout">
+
+            <div class="card card-padding">
+
+                <div id="journalStatus" class="status"></div>
+
+                <div class="dealer-box">
+
+                    <div class="dealer-title">
+                        DEALER Rule — Decide Debit &amp; Credit
+                    </div>
+
+                    <div class="dealer-grid">
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">D</div>
+                            <div class="dealer-main">
+                                Debit — Expenses
+                            </div>
+                            <div class="dealer-side">
+                                Expenses increase → Debit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">E</div>
+                            <div class="dealer-main">
+                                Debit — Assets
+                            </div>
+                            <div class="dealer-side">
+                                Assets increase → Debit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">A</div>
+                            <div class="dealer-main">
+                                Debit — Losses
+                            </div>
+                            <div class="dealer-side">
+                                Losses increase → Debit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">L</div>
+                            <div class="dealer-main">
+                                Credit — Liabilities
+                            </div>
+                            <div class="dealer-side">
+                                Liabilities increase → Credit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">E</div>
+                            <div class="dealer-main">
+                                Credit — Equity
+                            </div>
+                            <div class="dealer-side">
+                                Capital increases → Credit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">R</div>
+                            <div class="dealer-main">
+                                Credit — Revenue
+                            </div>
+                            <div class="dealer-side">
+                                Income increases → Credit
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div style="height:14px"></div>
+
+
+                <div style="display:grid;gap:13px;">
+
+                    <div>
+                        <label class="field-label">
+                            Transaction Date
+                        </label>
+
+                        <input type="date" id="journalDate" class="input" value="2026-09-01">
+                    </div>
+
+
+                    <div>
+                        <label class="field-label">
+                            Particulars / Description
+                        </label>
+
+                        <input type="text" id="journalNarration" class="input" placeholder="Example: Rent paid by cash" maxlength="250">
+
+                        <div class="help">
+                            Write a short description of the transaction.
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="field-label">
+                            Debit Account
+                        </label>
+
+                        <select id="debitAccount" class="select">
+                            <option value="">
+                                Select account to DEBIT
+                            </option>
+
+                            
+            <option value="Cash in Hand">
+                Cash in Hand
+            </option>
+        
+            <option value="Bank Account">
+                Bank Account
+            </option>
+        
+            <option value="Accounts Receivable">
+                Accounts Receivable
+            </option>
+        
+            <option value="Inventory">
+                Inventory
+            </option>
+        
+            <option value="Fixed Assets">
+                Fixed Assets
+            </option>
+        
+            <option value="Accounts Payable">
+                Accounts Payable
+            </option>
+        
+            <option value="Loan Payable">
+                Loan Payable
+            </option>
+        
+            <option value="Salary Payable">
+                Salary Payable
+            </option>
+        
+            <option value="Capital Account">
+                Capital Account
+            </option>
+        
+            <option value="Drawings">
+                Drawings
+            </option>
+        
+            <option value="Sales">
+                Sales
+            </option>
+        
+            <option value="Service Income">
+                Service Income
+            </option>
+        
+            <option value="Other Income">
+                Other Income
+            </option>
+        
+            <option value="Purchase">
+                Purchase
+            </option>
+        
+            <option value="Rent Expense">
+                Rent Expense
+            </option>
+        
+            <option value="Salary Expense">
+                Salary Expense
+            </option>
+        
+            <option value="Electricity Expense">
+                Electricity Expense
+            </option>
+        
+            <option value="Transport Expense">
+                Transport Expense
+            </option>
+        
+            <option value="Depreciation">
+                Depreciation
+            </option>
+        
+            <option value="Miscellaneous Expense">
+                Miscellaneous Expense
+            </option>
+        
+                        </select>
+
+                        <div class="help">
+                            Under DEALER, debit normally increases
+                            an Expense, Asset or Loss.
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="field-label">
+                            Credit Account
+                        </label>
+
+                        <select id="creditAccount" class="select">
+                            <option value="">
+                                Select account to CREDIT
+                            </option>
+
+                            
+            <option value="Cash in Hand">
+                Cash in Hand
+            </option>
+        
+            <option value="Bank Account">
+                Bank Account
+            </option>
+        
+            <option value="Accounts Receivable">
+                Accounts Receivable
+            </option>
+        
+            <option value="Inventory">
+                Inventory
+            </option>
+        
+            <option value="Fixed Assets">
+                Fixed Assets
+            </option>
+        
+            <option value="Accounts Payable">
+                Accounts Payable
+            </option>
+        
+            <option value="Loan Payable">
+                Loan Payable
+            </option>
+        
+            <option value="Salary Payable">
+                Salary Payable
+            </option>
+        
+            <option value="Capital Account">
+                Capital Account
+            </option>
+        
+            <option value="Drawings">
+                Drawings
+            </option>
+        
+            <option value="Sales">
+                Sales
+            </option>
+        
+            <option value="Service Income">
+                Service Income
+            </option>
+        
+            <option value="Other Income">
+                Other Income
+            </option>
+        
+            <option value="Purchase">
+                Purchase
+            </option>
+        
+            <option value="Rent Expense">
+                Rent Expense
+            </option>
+        
+            <option value="Salary Expense">
+                Salary Expense
+            </option>
+        
+            <option value="Electricity Expense">
+                Electricity Expense
+            </option>
+        
+            <option value="Transport Expense">
+                Transport Expense
+            </option>
+        
+            <option value="Depreciation">
+                Depreciation
+            </option>
+        
+            <option value="Miscellaneous Expense">
+                Miscellaneous Expense
+            </option>
+        
+                        </select>
+
+                        <div class="help">
+                            Under DEALER, credit normally increases
+                            a Liability, Equity or Revenue.
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="field-label">
+                            Amount (₹)
+                        </label>
+
+                        <input type="number" id="journalAmount" class="input" min="0.01" step="0.01" inputmode="decimal" placeholder="0.00">
+
+                        <div class="help">
+                            Debit amount and credit amount must always be equal.
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-primary" id="saveEntryBtn" style="width:100%;" onclick="saveJournalEntry()">
+                        Save Journal Entry
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="card card-padding">
+
+                    <div class="section-title">
+                        Quick Examples
+                    </div>
+
+                    <div class="account-guide">
+
+                        <div class="guide-title">
+                            1. Rent paid in cash
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Rent Expense</span>
+                            <span class="guide-dr">DEBIT</span>
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Cash in Hand</span>
+                            <span class="guide-cr">CREDIT</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="account-guide">
+
+                        <div class="guide-title">
+                            2. Cash sales
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Cash in Hand</span>
+                            <span class="guide-dr">DEBIT</span>
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Sales</span>
+                            <span class="guide-cr">CREDIT</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="account-guide">
+
+                        <div class="guide-title">
+                            3. Owner invests cash
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Cash in Hand</span>
+                            <span class="guide-dr">DEBIT</span>
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Capital Account</span>
+                            <span class="guide-cr">CREDIT</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="account-guide">
+
+                        <div class="guide-title">
+                            4. Purchase asset for cash
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Fixed Assets</span>
+                            <span class="guide-dr">DEBIT</span>
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Cash in Hand</span>
+                            <span class="guide-cr">CREDIT</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        
+
+        <div class="card card-padding" style="margin-top:14px;">
+
+            <div class="section-title">
+                Recent Journal Entries
+            </div>
+
+            <div class="table-container">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th class="amount">Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        
+
+                            <tr>
+
+                                <td>
+                                    01 Sept 2026
+                                </td>
+
+                                <td>
+                                    casd
+                                </td>
+
+                                <td class="dr-text">
+                                    Cash in Hand
+                                </td>
+
+                                <td class="cr-text">
+                                    Capital Account
+                                </td>
+
+                                <td class="amount">
+                                    ₹1,00,000.00
+                                </td>
+
+                            </tr>
+
+                        
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    
+
+    </div>
+
+</main>
+
+
+<!-- =========================================================
+     BOTTOM ACTION BAR (mobile only)
+========================================================= -->
+
+<nav class="bottom-bar no-print">
+
+    <button class="btn btn-secondary" onclick="exportCSV()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+        Export
+    </button>
+
+    <button class="btn btn-secondary" onclick="printStatements()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><path d="M6 14h12v8H6z"></path></svg>
+        Print
+    </button>
+
+    <button class="btn btn-danger" onclick="resetData()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+        Reset
+    </button>
+
+</nav>
+
+
+<script>
+"use strict";
+
+/* =========================================================
+   ACCOUNT TYPES
+========================================================= */
+
+const ACCOUNT_TYPES = {
+    ASSET: "asset",
+    LIABILITY: "liability",
+    CAPITAL: "capital",
+    DRAWING: "drawing",
+    INCOME: "income",
+    EXPENSE: "expense"
+};
+
+
+/* =========================================================
+   DEFAULT ACCOUNTS
+========================================================= */
+
+const DEFAULT_ACCOUNTS = [
+
+    {id:1,  name:"Cash in Hand", type:"asset", nature:"debit"},
+    {id:2,  name:"Bank Account", type:"asset", nature:"debit"},
+    {id:3,  name:"Accounts Receivable", type:"asset", nature:"debit"},
+    {id:4,  name:"Inventory", type:"asset", nature:"debit"},
+    {id:5,  name:"Fixed Assets", type:"asset", nature:"debit"},
+
+    {id:6,  name:"Accounts Payable", type:"liability", nature:"credit"},
+    {id:7,  name:"Loan Payable", type:"liability", nature:"credit"},
+    {id:8,  name:"Salary Payable", type:"liability", nature:"credit"},
+
+    {id:9,  name:"Capital Account", type:"capital", nature:"credit"},
+
+    {id:10, name:"Drawings", type:"drawing", nature:"debit"},
+
+    {id:11, name:"Sales", type:"income", nature:"credit"},
+    {id:12, name:"Service Income", type:"income", nature:"credit"},
+    {id:13, name:"Other Income", type:"income", nature:"credit"},
+
+    {id:14, name:"Purchase", type:"expense", nature:"debit"},
+    {id:15, name:"Rent Expense", type:"expense", nature:"debit"},
+    {id:16, name:"Salary Expense", type:"expense", nature:"debit"},
+    {id:17, name:"Electricity Expense", type:"expense", nature:"debit"},
+    {id:18, name:"Transport Expense", type:"expense", nature:"debit"},
+    {id:19, name:"Depreciation", type:"expense", nature:"debit"},
+    {id:20, name:"Miscellaneous Expense", type:"expense", nature:"debit"}
+];
+
+
+/* =========================================================
+   STORAGE
+   Plain localStorage — this file runs as a standalone page
+   on a real website, not inside Claude's artifact preview,
+   so the Claude-only window.storage API isn't available
+   here. localStorage is synchronous and supported in every
+   modern mobile and desktop browser (including Android).
+   All data lives under a single key.
+========================================================= */
+
+const STORAGE_KEY = "business-accounts-data";
+
+let accounts = DEFAULT_ACCOUNTS.map(a => ({...a}));
+let journals = [];
+let currentTab = "journal";
+let dataReady = true;
+
+
+function loadData() {
+
+    try {
+
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (!saved) {
+            accounts = DEFAULT_ACCOUNTS.map(a => ({...a}));
+            journals = [];
+            return;
+        }
+
+        const parsed = JSON.parse(saved);
+
+        accounts = Array.isArray(parsed.accounts) && parsed.accounts.length
+            ? parsed.accounts
+            : DEFAULT_ACCOUNTS.map(a => ({...a}));
+
+        journals = Array.isArray(parsed.journals)
+            ? parsed.journals
+            : [];
+
+    } catch (error) {
+
+        console.error("Load failed, starting fresh:", error);
+
+        accounts = DEFAULT_ACCOUNTS.map(a => ({...a}));
+        journals = [];
+    }
+}
+
+
+function saveData() {
+
+    try {
+
+        const payload = JSON.stringify({ accounts, journals });
+
+        localStorage.setItem(STORAGE_KEY, payload);
+
+        return true;
+
+    } catch (error) {
+
+        // Can fail in private/incognito modes with storage
+        // disabled, or when storage quota is exceeded.
+        console.error("Save failed:", error);
+
+        return false;
+    }
+}
+
+
+/* =========================================================
+   UTILITY
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function money(value) {
+
+    const number = Number(value) || 0;
+
+    return new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(number);
+}
+
+
+function today() {
+
+    const date = new Date();
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2,"0");
+    const day = String(date.getDate()).padStart(2,"0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+function displayDate(dateString) {
+
+    if (!dateString) return "";
+
+    const date = new Date(dateString + "T00:00:00");
+
+    return date.toLocaleDateString("en-IN", {
+        day:"2-digit",
+        month:"short",
+        year:"numeric"
+    });
+}
+
+
+function accountByName(name) {
+
+    return accounts.find(
+        account => account.name === name
+    );
+}
+
+
+function badge(type) {
+
+    return `<span class="badge badge-${type}">
+        ${escapeHTML(type)}
+    </span>`;
+}
+
+
+/* =========================================================
+   ACCOUNTING ENGINE
+========================================================= */
+
+/*
+    DEALER METHOD
+
+    D = Debit Expenses
+    E = Debit Assets
+    A = Debit Losses
+
+    L = Credit Liabilities
+    E = Credit Equity
+    R = Credit Revenue
+
+    Note:
+    Drawing is treated as a reduction of owner's equity
+    and normally carries a debit balance.
+*/
+
+
+function normalNature(type) {
+
+    if (
+        type === ACCOUNT_TYPES.ASSET ||
+        type === ACCOUNT_TYPES.EXPENSE ||
+        type === ACCOUNT_TYPES.DRAWING
+    ) {
+        return "debit";
+    }
+
+    return "credit";
+}
+
+
+function getAccountBalance(accountName) {
+
+    const account = accountByName(accountName);
+
+    if (!account) return 0;
+
+    let debitTotal = 0;
+    let creditTotal = 0;
+
+    journals.forEach(entry => {
+
+        const amount = Number(entry.amount) || 0;
+
+        if (entry.debitAccount === accountName) {
+            debitTotal += amount;
+        }
+
+        if (entry.creditAccount === accountName) {
+            creditTotal += amount;
+        }
+    });
+
+    /*
+       Positive balance means normal debit-side balance
+       for calculation purposes.
+
+       Negative means credit-side balance.
+    */
+
+    return debitTotal - creditTotal;
+}
+
+
+function getDebitCredit(accountName) {
+
+    let debit = 0;
+    let credit = 0;
+
+    journals.forEach(entry => {
+
+        const amount = Number(entry.amount) || 0;
+
+        if (entry.debitAccount === accountName) {
+            debit += amount;
+        }
+
+        if (entry.creditAccount === accountName) {
+            credit += amount;
+        }
+
+    });
+
+    return {
+        debit,
+        credit,
+        balance: debit - credit
+    };
+}
+
+
+function calculateTrialBalance() {
+
+    const result = [];
+
+    accounts.forEach(account => {
+
+        const dc = getDebitCredit(account.name);
+
+        let debit = 0;
+        let credit = 0;
+
+        if (dc.balance > 0) {
+            debit = dc.balance;
+        }
+
+        if (dc.balance < 0) {
+            credit = Math.abs(dc.balance);
+        }
+
+        if (debit !== 0 || credit !== 0) {
+
+            result.push({
+                name: account.name,
+                type: account.type,
+                debit,
+                credit
+            });
+
+        }
+
+    });
+
+    return result;
+}
+
+
+/* =========================================================
+   PROFIT & LOSS
+========================================================= */
+
+function getProfitLoss() {
+
+    let income = [];
+    let expenses = [];
+
+    accounts.forEach(account => {
+
+        const balance = getAccountBalance(account.name);
+
+        if (account.type === ACCOUNT_TYPES.INCOME) {
+
+            const amount = Math.max(0, -balance);
+
+            if (amount !== 0) {
+                income.push({
+                    name: account.name,
+                    amount
+                });
+            }
+
+        }
+
+        if (account.type === ACCOUNT_TYPES.EXPENSE) {
+
+            const amount = Math.max(0, balance);
+
+            if (amount !== 0) {
+                expenses.push({
+                    name: account.name,
+                    amount
+                });
+            }
+
+        }
+
+    });
+
+    const totalIncome =
+        income.reduce((sum,item) => sum + item.amount,0);
+
+    const totalExpense =
+        expenses.reduce((sum,item) => sum + item.amount,0);
+
+    const netProfit =
+        totalIncome - totalExpense;
+
+    return {
+        income,
+        expenses,
+        totalIncome,
+        totalExpense,
+        netProfit
+    };
+}
+
+
+/* =========================================================
+   BALANCE SHEET
+========================================================= */
+
+function getBalanceSheet() {
+
+    const assets = [];
+    const liabilities = [];
+    const capital = [];
+    const drawings = [];
+
+    accounts.forEach(account => {
+
+        const balance =
+            getAccountBalance(account.name);
+
+        if (account.type === ACCOUNT_TYPES.ASSET) {
+
+            if (balance !== 0) {
+
+                assets.push({
+                    name: account.name,
+                    amount: balance
+                });
+
+            }
+
+        }
+
+        if (account.type === ACCOUNT_TYPES.LIABILITY) {
+
+            const amount = Math.abs(balance);
+
+            if (amount !== 0) {
+
+                liabilities.push({
+                    name: account.name,
+                    amount
+                });
+
+            }
+
+        }
+
+        if (account.type === ACCOUNT_TYPES.CAPITAL) {
+
+            const amount = Math.abs(balance);
+
+            if (amount !== 0) {
+
+                capital.push({
+                    name: account.name,
+                    amount
+                });
+
+            }
+
+        }
+
+        if (account.type === ACCOUNT_TYPES.DRAWING) {
+
+            if (balance !== 0) {
+
+                drawings.push({
+                    name: account.name,
+                    amount: Math.max(0,balance)
+                });
+
+            }
+
+        }
+
+    });
+
+    const pl = getProfitLoss();
+
+    const totalAssets =
+        assets.reduce((sum,item) => sum + item.amount,0);
+
+    const totalLiabilities =
+        liabilities.reduce((sum,item) => sum + item.amount,0);
+
+    const totalCapital =
+        capital.reduce((sum,item) => sum + item.amount,0);
+
+    const totalDrawings =
+        drawings.reduce((sum,item) => sum + item.amount,0);
+
+    const proprietorsEquity =
+        totalCapital +
+        pl.netProfit -
+        totalDrawings;
+
+    const totalLiabilitiesAndEquity =
+        totalLiabilities +
+        proprietorsEquity;
+
+    return {
+        assets,
+        liabilities,
+        capital,
+        drawings,
+        totalAssets,
+        totalLiabilities,
+        totalCapital,
+        totalDrawings,
+        netProfit: pl.netProfit,
+        proprietorsEquity,
+        totalLiabilitiesAndEquity
+    };
+}
+
+
+/* =========================================================
+   TAB META
+   Headline + plain-English bullet explainer shown in the
+   tab info bar for every tab, plus the icon glyph used
+   there.
+========================================================= */
+
+const TAB_META = {
+
+    journal: {
+        kicker: "Step 1",
+        headline: "Journal Entry",
+        icon: `<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>`,
+        bullets: [
+            "Records every transaction as it happens, in date order.",
+            "Applies the DEALER rule to decide which account is debited and which is credited.",
+            "Feeds every other tab — nothing else calculates until an entry exists here."
+        ]
+    },
+
+    ledger: {
+        kicker: "Step 2",
+        headline: "General Ledger",
+        icon: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>`,
+        bullets: [
+            "Regroups journal entries account by account, instead of date by date.",
+            "Shows a running balance so you can see each account's position at a glance.",
+            "Is the bridge between raw entries and the Trial Balance."
+        ]
+    },
+
+    trial: {
+        kicker: "Step 3",
+        headline: "Trial Balance",
+        icon: `<path d="M12 3v18"/><path d="M5 8h14"/><path d="M5 8a2 2 0 1 0 4 0"/><path d="M15 8a2 2 0 1 0 4 0"/><path d="M3 21h18"/>`,
+        bullets: [
+            "Lists every account with its closing debit or credit balance.",
+            "Checks that total debits equal total credits — the core sanity check in double-entry bookkeeping.",
+            "A mismatch here means an entry upstream needs fixing before you trust the P&L or Balance Sheet."
+        ]
+    },
+
+    income: {
+        kicker: "Step 4",
+        headline: "Profit & Loss Account",
+        icon: `<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>`,
+        bullets: [
+            "Totals income accounts and expense accounts for the period.",
+            "Subtracts expenses from revenue to arrive at net profit or net loss.",
+            "That result flows straight into equity on the Balance Sheet."
+        ]
+    },
+
+    balance: {
+        kicker: "Step 5",
+        headline: "Balance Sheet",
+        icon: `<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 3v18"/>`,
+        bullets: [
+            "Snapshots what the business owns (assets) against what it owes (liabilities and equity).",
+            "Includes current profit or loss so the two sides tie out.",
+            "Assets should always equal Liabilities + Equity — that's the balance being checked."
+        ]
+    },
+
+    accounts: {
+        kicker: "Setup",
+        headline: "Manage Accounts",
+        icon: `<path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="7" r="4"/>`,
+        bullets: [
+            "Defines the chart of accounts — every account this business is allowed to post to.",
+            "Classifies each account as asset, liability, capital, drawing, income, or expense.",
+            "Classification here drives how the Journal validates DEALER and how totals are grouped everywhere else."
+        ]
+    },
+
+    info: {
+        kicker: "Reference",
+        headline: "Info & Legal",
+        icon: `<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>`,
+        bullets: [
+            "Copyright, ownership, and legal information for this application.",
+            "No transaction data lives here — it's reference only."
+        ]
+    }
+
+};
+
+
+function renderTabInfoBar(tab) {
+
+    const bar =
+        document.getElementById("tabInfoBar");
+
+    if (!bar) return;
+
+    const meta =
+        TAB_META[tab] || TAB_META.journal;
+
+    const bulletItems =
+        meta.bullets
+            .map(text => `<li>${escapeHTML(text)}</li>`)
+            .join("");
+
+    bar.innerHTML = `
+
+        <div class="tab-info-bar">
+
+            <div class="tab-info-head">
+
+                <div class="tab-info-icon-wrap">
+
+                    <div class="tab-info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                            ${meta.icon}
+                        </svg>
+                    </div>
+
+                    <div>
+                        <div class="tab-info-kicker">${escapeHTML(meta.kicker)}</div>
+                        <div class="tab-info-headline">${escapeHTML(meta.headline)}</div>
+                    </div>
+
+                </div>
+
+                <div class="tab-info-actions">
+
+                    <button class="btn btn-secondary" onclick="exportCSV()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+                        Export
+                    </button>
+
+                    <button class="btn btn-danger" onclick="resetData()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><path d="M3 6h18"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                        Reset
+                    </button>
+
+                </div>
+
+            </div>
+
+            <ul class="tab-info-bullets">
+                ${bulletItems}
+            </ul>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function switchTab(tab) {
+
+    currentTab = tab;
+
+    document.querySelectorAll(".tab")
+        .forEach(button => button.classList.remove("active"));
+
+    const selected =
+        document.getElementById("tab-" + tab);
+
+    if (selected) {
+        selected.classList.add("active");
+    }
+
+    render();
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+
+/* =========================================================
+   MAIN RENDER
+========================================================= */
+
+function render() {
+
+    const content =
+        document.getElementById("content");
+
+    if (!content) return;
+
+    if (!dataReady) return;
+
+    renderTabInfoBar(currentTab);
+
+    switch(currentTab) {
+
+        case "journal":
+            renderJournal(content);
+            break;
+
+        case "ledger":
+            renderLedger(content);
+            break;
+
+        case "trial":
+            renderTrialBalance(content);
+            break;
+
+        case "income":
+            renderProfitLoss(content);
+            break;
+
+        case "balance":
+            renderBalanceSheet(content);
+            break;
+
+        case "accounts":
+            renderAccounts(content);
+            break;
+
+        case "info":
+            renderInfo(content);
+            break;
+
+        default:
+            currentTab = "journal";
+            renderJournal(content);
+    }
+}
+
+
+/* =========================================================
+   JOURNAL
+========================================================= */
+
+function renderJournal(container) {
+
+    const options = accounts
+        .map(account => `
+            <option value="${escapeHTML(account.name)}">
+                ${escapeHTML(account.name)}
+            </option>
+        `)
+        .join("");
+
+    container.innerHTML = `
+
+        <div class="page-header">
+            <div class="page-title">
+                Journal Entry
+            </div>
+
+            <div class="page-description">
+                Record every business transaction using double-entry bookkeeping.
+            </div>
+        </div>
+
+
+        <div class="journal-layout">
+
+            <div class="card card-padding">
+
+                <div id="journalStatus" class="status"></div>
+
+                <div class="dealer-box">
+
+                    <div class="dealer-title">
+                        DEALER Rule — Decide Debit & Credit
+                    </div>
+
+                    <div class="dealer-grid">
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">D</div>
+                            <div class="dealer-main">
+                                Debit — Expenses
+                            </div>
+                            <div class="dealer-side">
+                                Expenses increase → Debit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">E</div>
+                            <div class="dealer-main">
+                                Debit — Assets
+                            </div>
+                            <div class="dealer-side">
+                                Assets increase → Debit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">A</div>
+                            <div class="dealer-main">
+                                Debit — Losses
+                            </div>
+                            <div class="dealer-side">
+                                Losses increase → Debit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">L</div>
+                            <div class="dealer-main">
+                                Credit — Liabilities
+                            </div>
+                            <div class="dealer-side">
+                                Liabilities increase → Credit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">E</div>
+                            <div class="dealer-main">
+                                Credit — Equity
+                            </div>
+                            <div class="dealer-side">
+                                Capital increases → Credit
+                            </div>
+                        </div>
+
+                        <div class="dealer-item">
+                            <div class="dealer-letter">R</div>
+                            <div class="dealer-main">
+                                Credit — Revenue
+                            </div>
+                            <div class="dealer-side">
+                                Income increases → Credit
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div style="height:14px"></div>
+
+
+                <div style="display:grid;gap:13px;">
+
+                    <div>
+                        <label class="field-label">
+                            Transaction Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="journalDate"
+                            class="input"
+                            value="${today()}"
+                        >
+                    </div>
+
+
+                    <div>
+                        <label class="field-label">
+                            Particulars / Description
+                        </label>
+
+                        <input
+                            type="text"
+                            id="journalNarration"
+                            class="input"
+                            placeholder="Example: Rent paid by cash"
+                            maxlength="250"
+                        >
+
+                        <div class="help">
+                            Write a short description of the transaction.
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="field-label">
+                            Debit Account
+                        </label>
+
+                        <select
+                            id="debitAccount"
+                            class="select"
+                        >
+                            <option value="">
+                                Select account to DEBIT
+                            </option>
+
+                            ${options}
+                        </select>
+
+                        <div class="help">
+                            Under DEALER, debit normally increases
+                            an Expense, Asset or Loss.
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="field-label">
+                            Credit Account
+                        </label>
+
+                        <select
+                            id="creditAccount"
+                            class="select"
+                        >
+                            <option value="">
+                                Select account to CREDIT
+                            </option>
+
+                            ${options}
+                        </select>
+
+                        <div class="help">
+                            Under DEALER, credit normally increases
+                            a Liability, Equity or Revenue.
+                        </div>
+                    </div>
+
+
+                    <div>
+                        <label class="field-label">
+                            Amount (₹)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="journalAmount"
+                            class="input"
+                            min="0.01"
+                            step="0.01"
+                            inputmode="decimal"
+                            placeholder="0.00"
+                        >
+
+                        <div class="help">
+                            Debit amount and credit amount must always be equal.
+                        </div>
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary"
+                        id="saveEntryBtn"
+                        style="width:100%;"
+                        onclick="saveJournalEntry()"
+                    >
+                        Save Journal Entry
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="card card-padding">
+
+                    <div class="section-title">
+                        Quick Examples
+                    </div>
+
+                    <div class="account-guide">
+
+                        <div class="guide-title">
+                            1. Rent paid in cash
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Rent Expense</span>
+                            <span class="guide-dr">DEBIT</span>
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Cash in Hand</span>
+                            <span class="guide-cr">CREDIT</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="account-guide">
+
+                        <div class="guide-title">
+                            2. Cash sales
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Cash in Hand</span>
+                            <span class="guide-dr">DEBIT</span>
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Sales</span>
+                            <span class="guide-cr">CREDIT</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="account-guide">
+
+                        <div class="guide-title">
+                            3. Owner invests cash
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Cash in Hand</span>
+                            <span class="guide-dr">DEBIT</span>
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Capital Account</span>
+                            <span class="guide-cr">CREDIT</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="account-guide">
+
+                        <div class="guide-title">
+                            4. Purchase asset for cash
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Fixed Assets</span>
+                            <span class="guide-dr">DEBIT</span>
+                        </div>
+
+                        <div class="guide-row">
+                            <span>Cash in Hand</span>
+                            <span class="guide-cr">CREDIT</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        ${renderRecentEntries()}
+
+    `;
+}
+
+
+/* =========================================================
+   RECENT JOURNALS
+========================================================= */
+
+function renderRecentEntries() {
+
+    if (journals.length === 0) {
+
+        return `
+            <div class="card" style="margin-top:14px;">
+                <div class="empty">
+                    No journal entries yet.
+                </div>
+            </div>
+        `;
+    }
+
+    const recent =
+        journals
+        .slice()
+        .sort((a,b) => b.id - a.id)
+        .slice(0,8);
+
+    return `
+
+        <div class="card card-padding" style="margin-top:14px;">
+
+            <div class="section-title">
+                Recent Journal Entries
+            </div>
+
+            <div class="table-container">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th class="amount">Amount</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${recent.map(entry => `
+
+                            <tr>
+
+                                <td>
+                                    ${escapeHTML(displayDate(entry.date))}
+                                </td>
+
+                                <td>
+                                    ${escapeHTML(entry.narration)}
+                                </td>
+
+                                <td class="dr-text">
+                                    ${escapeHTML(entry.debitAccount)}
+                                </td>
+
+                                <td class="cr-text">
+                                    ${escapeHTML(entry.creditAccount)}
+                                </td>
+
+                                <td class="amount">
+                                    ${money(entry.amount)}
+                                </td>
+
+                            </tr>
+
+                        `).join("")}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   SAVE JOURNAL
+========================================================= */
+
+function saveJournalEntry() {
+
+    const date =
+        document.getElementById("journalDate").value;
+
+    const narration =
+        document.getElementById("journalNarration")
+        .value
+        .trim();
+
+    const debitAccount =
+        document.getElementById("debitAccount").value;
+
+    const creditAccount =
+        document.getElementById("creditAccount").value;
+
+    const amount =
+        Number(document.getElementById("journalAmount").value);
+
+
+    if (!date) {
+
+        showStatus(
+            "Please select the transaction date.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!narration) {
+
+        showStatus(
+            "Please enter the transaction description.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!debitAccount) {
+
+        showStatus(
+            "Please select the account to DEBIT.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!creditAccount) {
+
+        showStatus(
+            "Please select the account to CREDIT.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (debitAccount === creditAccount) {
+
+        showStatus(
+            "Debit and Credit accounts cannot be the same.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+
+        showStatus(
+            "Amount must be greater than ₹0.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const debitAcc =
+        accountByName(debitAccount);
+
+    const creditAcc =
+        accountByName(creditAccount);
+
+
+    if (!debitAcc || !creditAcc) {
+
+        showStatus(
+            "Selected account could not be found.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    /*
+       This is intentionally a validation warning rather
+       than a hard block because real accounting entries
+       can involve contra/adjustment situations.
+    */
+
+    const newEntry = {
+
+        id: Date.now(),
+
+        date,
+
+        narration,
+
+        debitAccount,
+
+        creditAccount,
+
+        amount: Number(amount.toFixed(2))
+
+    };
+
+    journals.push(newEntry);
+
+    const saved = saveData();
+
+    if (!saved) {
+
+        // Roll back the in-memory change so the UI stays
+        // consistent with what's actually persisted.
+        journals = journals.filter(entry => entry.id !== newEntry.id);
+
+        showStatus(
+            "Could not save this entry. Your browser storage may be full or disabled.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    renderJournal(
+        document.getElementById("content")
+    );
+
+
+    showStatus(
+        "Journal entry saved successfully.",
+        "success"
+    );
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function showStatus(message,type) {
+
+    const status =
+        document.getElementById("journalStatus");
+
+    if (!status) {
+
+        alert(message);
+
+        return;
+    }
+
+    status.className =
+        "status " + type;
+
+    status.textContent = message;
+
+    setTimeout(() => {
+
+        if (status) {
+            status.className = "status";
+        }
+
+    },4000);
+}
+
+
+/* =========================================================
+   GENERAL LEDGER
+========================================================= */
+
+function renderLedger(container) {
+
+    if (journals.length === 0) {
+
+        container.innerHTML = `
+            <div class="page-header">
+                <div class="page-title">General Ledger</div>
+            </div>
+            <div class="card">
+                <div class="empty">
+                    No transactions recorded.
+                </div>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    let html = `
+
+        <div class="page-header">
+
+            <div class="page-title">
+                General Ledger
+            </div>
+
+            <div class="page-description">
+                Account-wise transaction history and balances.
+            </div>
+
+        </div>
+
+    `;
+
+
+    accounts.forEach(account => {
+
+        const entries =
+            journals.filter(entry =>
+                entry.debitAccount === account.name ||
+                entry.creditAccount === account.name
+            );
+
+
+        if (entries.length === 0) return;
+
+
+        const dc =
+            getDebitCredit(account.name);
+
+
+        const balance =
+            Math.abs(dc.balance);
+
+
+        const balanceNature =
+            dc.balance >= 0 ? "Debit" : "Credit";
+
+
+        html += `
+
+            <div class="card card-padding"
+                 style="margin-bottom:14px;">
+
+                <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    gap:10px;
+                    align-items:flex-start;
+                    margin-bottom:12px;
+                ">
+
+                    <div>
+
+                        <div style="
+                            font-weight:700;
+                            font-size:14px;
+                            margin-bottom:5px;
+                        ">
+                            ${escapeHTML(account.name)}
+                        </div>
+
+                        ${badge(account.type)}
+
+                    </div>
+
+                    <div style="text-align:right;">
+
+                        <div style="
+                            font-size:10px;
+                            color:#64748b;
+                            text-transform:uppercase;
+                            font-weight:700;
+                        ">
+                            Closing Balance
+                        </div>
+
+                        <div class="mono"
+                             style="
+                                font-size:13px;
+                                font-weight:600;
+                                margin-top:3px;
+                             ">
+
+                            ${money(balance)}
+
+                        </div>
+
+                        <div style="
+                            font-size:10px;
+                            color:#64748b;
+                        ">
+                            ${balanceNature}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th class="amount">Debit</th>
+                                <th class="amount">Credit</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            ${entries
+                                .slice()
+                                .sort((a,b) =>
+                                    a.date.localeCompare(b.date)
+                                )
+                                .map(entry => `
+
+                                <tr>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            displayDate(entry.date)
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(entry.narration)}
+                                    </td>
+
+                                    <td class="amount dr-text">
+                                        ${
+                                            entry.debitAccount === account.name
+                                            ? money(entry.amount)
+                                            : "-"
+                                        }
+                                    </td>
+
+                                    <td class="amount cr-text">
+                                        ${
+                                            entry.creditAccount === account.name
+                                            ? money(entry.amount)
+                                            : "-"
+                                        }
+                                    </td>
+
+                                </tr>
+
+                            `).join("")}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    container.innerHTML = html;
+}
+
+
+/* =========================================================
+   TRIAL BALANCE
+========================================================= */
+
+function renderTrialBalance(container) {
+
+    const trial =
+        calculateTrialBalance();
+
+
+    const totalDebit =
+        trial.reduce((sum,item) =>
+            sum + item.debit,0
+        );
+
+
+    const totalCredit =
+        trial.reduce((sum,item) =>
+            sum + item.credit,0
+        );
+
+
+    const difference =
+        Math.abs(totalDebit-totalCredit);
+
+
+    const balanced =
+        difference < 0.01;
+
+
+    if (trial.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="page-header">
+
+                <div class="page-title">
+                    Trial Balance
+                </div>
+
+            </div>
+
+            <div class="card">
+                <div class="empty">
+                    No transactions available for Trial Balance.
+                </div>
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML = `
+
+        <div class="page-header">
+
+            <div class="page-title">
+                Trial Balance
+            </div>
+
+            <div class="page-description">
+                Verification that total debit balances equal total credit balances.
+            </div>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+                <div class="summary-label">
+                    Total Debit
+                </div>
+                <div class="summary-value">
+                    ${money(totalDebit)}
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-label">
+                    Total Credit
+                </div>
+                <div class="summary-value">
+                    ${money(totalCredit)}
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-label">
+                    Difference
+                </div>
+                <div class="summary-value">
+                    ${money(difference)}
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-label">
+                    Status
+                </div>
+
+                <div class="summary-value"
+                     style="color:${balanced ? "#15803d" : "#b91c1c"}">
+
+                    ${balanced ? "BALANCED" : "ERROR"}
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card card-padding">
+
+            <div class="table-container">
+
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>Account</th>
+                            <th>Type</th>
+                            <th class="amount">Debit</th>
+                            <th class="amount">Credit</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${trial.map(item => `
+
+                            <tr>
+
+                                <td>
+                                    ${escapeHTML(item.name)}
+                                </td>
+
+                                <td>
+                                    ${badge(item.type)}
+                                </td>
+
+                                <td class="amount dr-text">
+                                    ${
+                                        item.debit
+                                        ? money(item.debit)
+                                        : "-"
+                                    }
+                                </td>
+
+                                <td class="amount cr-text">
+                                    ${
+                                        item.credit
+                                        ? money(item.credit)
+                                        : "-"
+                                    }
+                                </td>
+
+                            </tr>
+
+                        `).join("")}
+
+                    </tbody>
+
+                    <tfoot>
+
+                        <tr class="total-row">
+
+                            <td colspan="2">
+                                TOTAL
+                            </td>
+
+                            <td class="amount dr-text">
+                                ${money(totalDebit)}
+                            </td>
+
+                            <td class="amount cr-text">
+                                ${money(totalCredit)}
+                            </td>
+
+                        </tr>
+
+                    </tfoot>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   PROFIT & LOSS
+========================================================= */
+
+function renderProfitLoss(container) {
+
+    const pl =
+        getProfitLoss();
+
+
+    const profit =
+        pl.netProfit >= 0;
+
+
+    container.innerHTML = `
+
+        <div class="page-header">
+
+            <div class="page-title">
+                Profit & Loss Account
+            </div>
+
+            <div class="page-description">
+                Revenue less expenses for the recorded transactions.
+            </div>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Revenue
+                </div>
+
+                <div class="summary-value">
+                    ${money(pl.totalIncome)}
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Expenses
+                </div>
+
+                <div class="summary-value">
+                    ${money(pl.totalExpense)}
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Result
+                </div>
+
+                <div class="summary-value"
+                     style="color:${profit ? "#15803d" : "#b91c1c"}">
+
+                    ${profit ? "PROFIT" : "LOSS"}
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Net Result
+                </div>
+
+                <div class="summary-value">
+                    ${money(Math.abs(pl.netProfit))}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card card-padding">
+
+            <div class="section-title">
+                Revenue / Income
+            </div>
+
+            ${
+                pl.income.length === 0
+
+                ? `<div class="empty">
+                    No revenue recorded.
+                   </div>`
+
+                : `
+
+                    ${pl.income.map(item => `
+
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            gap:10px;
+                            padding:10px 0;
+                            border-bottom:1px solid #eef2f7;
+                        ">
+
+                            <span style="font-size:13px;">
+                                ${escapeHTML(item.name)}
+                            </span>
+
+                            <span class="mono cr-text">
+                                ${money(item.amount)}
+                            </span>
+
+                        </div>
+
+                    `).join("")}
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        padding:12px 0;
+                        font-weight:700;
+                    ">
+
+                        <span>
+                            Total Revenue
+                        </span>
+
+                        <span class="mono">
+                            ${money(pl.totalIncome)}
+                        </span>
+
+                    </div>
+
+                `
+            }
+
+
+            <div class="section-title"
+                 style="margin-top:20px;">
+
+                Expenses
+
+            </div>
+
+
+            ${
+                pl.expenses.length === 0
+
+                ? `<div class="empty">
+                    No expenses recorded.
+                   </div>`
+
+                : `
+
+                    ${pl.expenses.map(item => `
+
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            gap:10px;
+                            padding:10px 0;
+                            border-bottom:1px solid #eef2f7;
+                        ">
+
+                            <span style="font-size:13px;">
+                                ${escapeHTML(item.name)}
+                            </span>
+
+                            <span class="mono dr-text">
+                                ${money(item.amount)}
+                            </span>
+
+                        </div>
+
+                    `).join("")}
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        padding:12px 0;
+                        font-weight:700;
+                    ">
+
+                        <span>
+                            Total Expenses
+                        </span>
+
+                        <span class="mono">
+                            ${money(pl.totalExpense)}
+                        </span>
+
+                    </div>
+
+                `
+            }
+
+
+            <div class="${profit ? "net-profit" : "net-loss"}"
+                 style="
+                    margin-top:16px;
+                    padding:15px;
+                    border-radius:8px;
+                    display:flex;
+                    justify-content:space-between;
+                    gap:10px;
+                    font-weight:700;
+                 ">
+
+                <span>
+                    ${profit ? "NET PROFIT" : "NET LOSS"}
+                </span>
+
+                <span class="mono">
+                    ${money(Math.abs(pl.netProfit))}
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   BALANCE SHEET
+========================================================= */
+
+function renderBalanceSheet(container) {
+
+    const bs =
+        getBalanceSheet();
+
+
+    const difference =
+        Math.abs(
+            bs.totalAssets -
+            bs.totalLiabilitiesAndEquity
+        );
+
+
+    const balanced =
+        difference < 0.01;
+
+
+    container.innerHTML = `
+
+        <div class="page-header">
+
+            <div class="page-title">
+                Balance Sheet
+            </div>
+
+            <div class="page-description">
+                Assets compared with liabilities and owner's equity.
+            </div>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Total Assets
+                </div>
+
+                <div class="summary-value">
+                    ${money(bs.totalAssets)}
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Liabilities
+                </div>
+
+                <div class="summary-value">
+                    ${money(bs.totalLiabilities)}
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Owner's Equity
+                </div>
+
+                <div class="summary-value">
+                    ${money(bs.proprietorsEquity)}
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-label">
+                    Status
+                </div>
+
+                <div class="summary-value"
+                     style="color:${balanced ? "#15803d" : "#b91c1c"}">
+
+                    ${balanced ? "BALANCED" : "CHECK"}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card card-padding">
+
+            <div class="section-title">
+                Assets
+            </div>
+
+
+            ${
+                bs.assets.length === 0
+
+                ? `<div class="empty">
+                    No assets recorded.
+                   </div>`
+
+                : bs.assets.map(item => `
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        padding:10px 0;
+                        border-bottom:1px solid #eef2f7;
+                    ">
+
+                        <span>
+                            ${escapeHTML(item.name)}
+                        </span>
+
+                        <span class="mono">
+                            ${money(item.amount)}
+                        </span>
+
+                    </div>
+
+                `).join("")
+            }
+
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                padding:13px 0;
+                font-weight:700;
+                border-top:2px solid #cbd5e1;
+            ">
+
+                <span>
+                    TOTAL ASSETS
+                </span>
+
+                <span class="mono">
+                    ${money(bs.totalAssets)}
+                </span>
+
+            </div>
+
+
+            <div class="section-title"
+                 style="margin-top:20px;">
+
+                Liabilities
+
+            </div>
+
+
+            ${
+                bs.liabilities.length === 0
+
+                ? `<div class="empty">
+                    No liabilities recorded.
+                   </div>`
+
+                : bs.liabilities.map(item => `
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        padding:10px 0;
+                        border-bottom:1px solid #eef2f7;
+                    ">
+
+                        <span>
+                            ${escapeHTML(item.name)}
+                        </span>
+
+                        <span class="mono">
+                            ${money(item.amount)}
+                        </span>
+
+                    </div>
+
+                `).join("")
+            }
+
+
+            <div class="section-title"
+                 style="margin-top:20px;">
+
+                Owner's Capital
+
+            </div>
+
+
+            ${
+                bs.capital.length === 0
+
+                ? `<div class="empty">
+                    No capital recorded.
+                   </div>`
+
+                : bs.capital.map(item => `
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        padding:10px 0;
+                        border-bottom:1px solid #eef2f7;
+                    ">
+
+                        <span>
+                            ${escapeHTML(item.name)}
+                        </span>
+
+                        <span class="mono">
+                            ${money(item.amount)}
+                        </span>
+
+                    </div>
+
+                `).join("")
+            }
+
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                padding:10px 0;
+                border-bottom:1px solid #eef2f7;
+            ">
+
+                <span>
+                    Current Profit / (Loss)
+                </span>
+
+                <span class="mono">
+                    ${money(bs.netProfit)}
+                </span>
+
+            </div>
+
+
+            ${
+                bs.drawings.length > 0
+
+                ? `
+
+                    <div class="section-title"
+                         style="margin-top:20px;">
+
+                        Drawings
+
+                    </div>
+
+                    ${bs.drawings.map(item => `
+
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            padding:10px 0;
+                            border-bottom:1px solid #eef2f7;
+                        ">
+
+                            <span>
+                                ${escapeHTML(item.name)}
+                            </span>
+
+                            <span class="mono">
+                                ${money(item.amount)}
+                            </span>
+
+                        </div>
+
+                    `).join("")}
+
+                `
+
+                : ""
+            }
+
+
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                padding:14px;
+                margin-top:16px;
+                background:#f8fafc;
+                border:1px solid #dbe3ee;
+                border-radius:8px;
+                font-weight:700;
+            ">
+
+                <span>
+                    TOTAL LIABILITIES & EQUITY
+                </span>
+
+                <span class="mono">
+                    ${money(bs.totalLiabilitiesAndEquity)}
+                </span>
+
+            </div>
+
+
+            <div class="${balanced ? "net-profit" : "net-loss"}"
+                 style="
+                    margin-top:14px;
+                    padding:12px;
+                    border-radius:8px;
+                    font-size:12px;
+                    font-weight:600;
+                 ">
+
+                ${
+                    balanced
+
+                    ? "✓ Balance Sheet is balanced: Assets = Liabilities + Equity."
+
+                    : "⚠ Balance Sheet difference: " +
+                      money(difference)
+                }
+
+            </div>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   ACCOUNT MANAGEMENT
+========================================================= */
+
+/* =========================================================
+   INFO / COPYRIGHT & LEGAL
+========================================================= */
+
+function renderInfo(container) {
+
+    const year = new Date().getFullYear();
+
+    container.innerHTML = `
+
+        <div class="page-header">
+
+            <div class="page-title">
+                Info &amp; Legal
+            </div>
+
+            <div class="page-description">
+                Copyright, ownership, and legal information for this application.
+            </div>
+
+        </div>
+
+
+        <div class="card card-padding" style="margin-bottom:14px;">
+
+            <div class="section-title">
+                Copyright
+            </div>
+
+            <p style="color:var(--text-mid); font-size:13px; line-height:1.7; margin:0 0 10px;">
+                &copy; ${year} Arghamitra. All rights reserved.
+            </p>
+
+            <p style="color:var(--text-mid); font-size:13px; line-height:1.7; margin:0;">
+                This application, including its design, source code, structure,
+                and accounting logic, is the intellectual property of Arghamitra.
+                No part of this software may be reproduced, distributed, or
+                transmitted in any form or by any means without prior written
+                permission from the copyright holder.
+            </p>
+
+        </div>
+
+
+        <div class="card card-padding" style="margin-bottom:14px;">
+
+            <div class="section-title">
+                Legal Notice
+            </div>
+
+            <p style="color:var(--text-mid); font-size:13px; line-height:1.7; margin:0 0 10px;">
+                This tool is provided for general bookkeeping and record-keeping
+                purposes only. It does not constitute professional accounting,
+                tax, or legal advice. Users are responsible for verifying that
+                entries and resulting statements comply with applicable
+                accounting standards and local regulations.
+            </p>
+
+            <p style="color:var(--text-mid); font-size:13px; line-height:1.7; margin:0;">
+                All financial data entered into this application is stored
+                locally within your browser session. Arghamitra is not
+                responsible for data loss, inaccuracies, or decisions made
+                based on the output of this application.
+            </p>
+
+        </div>
+
+
+        <div class="card card-padding">
+
+            <div class="section-title">
+                Disclaimer of Warranty
+            </div>
+
+            <p style="color:var(--text-mid); font-size:13px; line-height:1.7; margin:0;">
+                This software is provided "as is", without warranty of any
+                kind, express or implied, including but not limited to the
+                warranties of merchantability, fitness for a particular
+                purpose, and non-infringement.
+            </p>
+
+        </div>
+
+    `;
+}
+
+
+/* =========================================================
+   MANAGE ACCOUNTS
+========================================================= */
+
+function renderAccounts(container) {
+
+    const types = [
+        "asset",
+        "liability",
+        "capital",
+        "drawing",
+        "income",
+        "expense"
+    ];
+
+
+    container.innerHTML = `
+
+        <div class="page-header">
+
+            <div class="page-title">
+                Manage Accounts
+            </div>
+
+            <div class="page-description">
+                Create accounts according to their accounting classification.
+            </div>
+
+        </div>
+
+
+        <div class="card card-padding"
+             style="margin-bottom:14px;">
+
+            <div id="accountStatus" class="status"></div>
+
+            <div class="section-title">
+                Create New Account
+            </div>
+
+
+            <div style="display:grid;gap:12px;">
+
+                <div>
+
+                    <label class="field-label">
+                        Account Name
+                    </label>
+
+                    <input
+                        id="newAccountName"
+                        class="input"
+                        type="text"
+                        maxlength="100"
+                        placeholder="Example: Office Equipment"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label class="field-label">
+                        Account Type
+                    </label>
+
+                    <select
+                        id="newAccountType"
+                        class="select"
+                    >
+
+                        <option value="asset">
+                            Asset
+                        </option>
+
+                        <option value="liability">
+                            Liability
+                        </option>
+
+                        <option value="capital">
+                            Capital / Equity
+                        </option>
+
+                        <option value="drawing">
+                            Drawings
+                        </option>
+
+                        <option value="income">
+                            Income / Revenue
+                        </option>
+
+                        <option value="expense">
+                            Expense
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    class="btn btn-primary"
+                    id="addAccountBtn"
+                    onclick="addAccount()"
+                >
+                    Create Account
+                </button>
+
+            </div>
+
+        </div>
+
+
+        ${types.map(type => {
+
+            const list =
+                accounts.filter(
+                    account => account.type === type
+                );
+
+
+            return `
+
+                <div class="card card-padding"
+                     style="margin-bottom:10px;">
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        margin-bottom:10px;
+                    ">
+
+                        <div style="
+                            font-weight:700;
+                            font-size:13px;
+                        ">
+                            ${type.toUpperCase()}
+                        </div>
+
+                        ${badge(type)}
+
+                    </div>
+
+
+                    ${
+                        list.length === 0
+
+                        ? `<div style="
+                            color:#94a3b8;
+                            font-size:12px;
+                        ">
+                            No accounts.
+                           </div>`
+
+                        : list.map(account => `
+
+                            <div style="
+                                display:flex;
+                                justify-content:space-between;
+                                align-items:center;
+                                gap:10px;
+                                padding:9px 0;
+                                border-bottom:1px solid #eef2f7;
+                            ">
+
+                                <div>
+
+                                    <div style="
+                                        font-size:13px;
+                                        font-weight:600;
+                                    ">
+                                        ${escapeHTML(account.name)}
+                                    </div>
+
+                                    <div style="
+                                        font-size:10px;
+                                        color:#64748b;
+                                        margin-top:2px;
+                                    ">
+
+                                        Normal balance:
+                                        ${account.nature.toUpperCase()}
+
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    ${badge(account.type)}
+                                </div>
+
+                            </div>
+
+                        `).join("")
+                    }
+
+                </div>
+
+            `;
+
+        }).join("")}
+
+    `;
+}
+
+
+/* =========================================================
+   ADD ACCOUNT
+========================================================= */
+
+function addAccount() {
+
+    const name =
+        document.getElementById("newAccountName")
+        .value
+        .trim();
+
+    const type =
+        document.getElementById("newAccountType")
+        .value;
+
+    const status = (message, type2) => {
+
+        const el = document.getElementById("accountStatus");
+
+        if (!el) return;
+
+        el.className = "status " + type2;
+        el.textContent = message;
+
+        setTimeout(() => {
+            if (el) el.className = "status";
+        }, 4000);
+    };
+
+
+    if (!name) {
+
+        status("Please enter an account name.", "error");
+
+        return;
+    }
+
+
+    const exists =
+        accounts.some(account =>
+            account.name.toLowerCase() === name.toLowerCase()
+        );
+
+
+    if (exists) {
+
+        status("An account with this name already exists.", "error");
+
+        return;
+    }
+
+
+    const nextId =
+        accounts.length > 0
+        ? Math.max(...accounts.map(a => Number(a.id) || 0)) + 1
+        : 1;
+
+    const newAccount = {
+
+        id: nextId,
+
+        name,
+
+        type,
+
+        nature: normalNature(type)
+
+    };
+
+    accounts.push(newAccount);
+
+    const saved = saveData();
+
+    if (!saved) {
+
+        accounts = accounts.filter(a => a.id !== newAccount.id);
+
+        status("Could not save this account. Your browser storage may be full or disabled.", "error");
+
+        return;
+    }
+
+    renderAccounts(
+        document.getElementById("content")
+    );
+
+    status("Account created.", "success");
+}
+
+
+/* =========================================================
+   CSV EXPORT
+========================================================= */
+
+function csvEscape(value) {
+
+    return '"' +
+        String(value ?? "")
+        .replace(/"/g,'""') +
+        '"';
+}
+
+
+function exportCSV() {
+
+    if (!dataReady) return;
+
+    const trial =
+        calculateTrialBalance();
+
+    const pl =
+        getProfitLoss();
+
+    const bs =
+        getBalanceSheet();
+
+
+    let rows = [];
+
+
+    rows.push([
+        "BUSINESS ACCOUNTS"
+    ]);
+
+
+    rows.push([]);
+
+
+    rows.push([
+        "TRIAL BALANCE"
+    ]);
+
+
+    rows.push([
+        "Account",
+        "Debit",
+        "Credit"
+    ]);
+
+
+    trial.forEach(item => {
+
+        rows.push([
+            item.name,
+            item.debit.toFixed(2),
+            item.credit.toFixed(2)
+        ]);
+
+    });
+
+
+    rows.push([]);
+
+
+    rows.push([
+        "PROFIT & LOSS"
+    ]);
+
+
+    rows.push([
+        "Income",
+        "Amount"
+    ]);
+
+
+    pl.income.forEach(item => {
+
+        rows.push([
+            item.name,
+            item.amount.toFixed(2)
+        ]);
+
+    });
+
+
+    rows.push([
+        "Total Income",
+        pl.totalIncome.toFixed(2)
+    ]);
+
+
+    rows.push([]);
+
+
+    rows.push([
+        "Expenses",
+        "Amount"
+    ]);
+
+
+    pl.expenses.forEach(item => {
+
+        rows.push([
+            item.name,
+            item.amount.toFixed(2)
+        ]);
+
+    });
+
+
+    rows.push([
+        "Total Expenses",
+        pl.totalExpense.toFixed(2)
+    ]);
+
+
+    rows.push([
+        "Net Profit/(Loss)",
+        pl.netProfit.toFixed(2)
+    ]);
+
+
+    rows.push([]);
+
+
+    rows.push([
+        "BALANCE SHEET"
+    ]);
+
+
+    rows.push([
+        "Total Assets",
+        bs.totalAssets.toFixed(2)
+    ]);
+
+
+    rows.push([
+        "Total Liabilities",
+        bs.totalLiabilities.toFixed(2)
+    ]);
+
+
+    rows.push([
+        "Owner's Equity",
+        bs.proprietorsEquity.toFixed(2)
+    ]);
+
+
+    rows.push([
+        "Total Liabilities & Equity",
+        bs.totalLiabilitiesAndEquity.toFixed(2)
+    ]);
+
+
+    const csv =
+        rows
+        .map(row =>
+            row.map(csvEscape).join(",")
+        )
+        .join("\r\n");
+
+
+    const blob =
+        new Blob(
+            ["\ufeff" + csv],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+    link.download =
+        "business_accounts.csv";
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+function printStatements() {
+
+    if (!dataReady) return;
+
+    const trial =
+        calculateTrialBalance();
+
+    const pl =
+        getProfitLoss();
+
+    const bs =
+        getBalanceSheet();
+
+
+    const rows =
+        trial.map(item => `
+
+            <tr>
+
+                <td>${escapeHTML(item.name)}</td>
+
+                <td style="text-align:right;">
+                    ${item.debit
+                        ? money(item.debit)
+                        : "-"
+                    }
+                </td>
+
+                <td style="text-align:right;">
+                    ${item.credit
+                        ? money(item.credit)
+                        : "-"
+                    }
+                </td>
+
+            </tr>
+
+        `).join("");
+
+
+    const incomeRows =
+        pl.income.map(item => `
+
+            <tr>
+                <td>${escapeHTML(item.name)}</td>
+                <td style="text-align:right;">
+                    ${money(item.amount)}
+                </td>
+            </tr>
+
+        `).join("");
+
+
+    const expenseRows =
+        pl.expenses.map(item => `
+
+            <tr>
+                <td>${escapeHTML(item.name)}</td>
+                <td style="text-align:right;">
+                    ${money(item.amount)}
+                </td>
+            </tr>
+
+        `).join("");
+
+
+    const assetRows =
+        bs.assets.map(item => `
+
+            <tr>
+                <td>${escapeHTML(item.name)}</td>
+                <td style="text-align:right;">
+                    ${money(item.amount)}
+                </td>
+            </tr>
+
+        `).join("");
+
+
+    const liabilityRows =
+        bs.liabilities.map(item => `
+
+            <tr>
+                <td>${escapeHTML(item.name)}</td>
+                <td style="text-align:right;">
+                    ${money(item.amount)}
+                </td>
+            </tr>
+
+        `).join("");
+
+
+    const capitalRows =
+        bs.capital.map(item => `
+
+            <tr>
+                <td>${escapeHTML(item.name)}</td>
+                <td style="text-align:right;">
+                    ${money(item.amount)}
+                </td>
+            </tr>
+
+        `).join("");
+
+
+    const printWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=900,height=700"
+        );
+
+
+    if (!printWindow) {
+
+        alert(
+            "Please allow pop-ups to print the statements."
+        );
+
+        return;
+    }
+
+
+    printWindow.document.write(`
+
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <title>
+                Business Accounts
+            </title>
+
+            <style>
+
+                body {
+                    font-family: Arial, sans-serif;
+                    color:#111;
+                    padding:30px;
+                }
+
+                h1 {
+                    text-align:center;
+                    margin-bottom:5px;
+                }
+
+                h2 {
+                    margin-top:35px;
+                    border-bottom:2px solid #222;
+                    padding-bottom:6px;
+                }
+
+                table {
+                    width:100%;
+                    border-collapse:collapse;
+                    margin-top:12px;
+                }
+
+                th,
+                td {
+                    border:1px solid #ccc;
+                    padding:8px;
+                    font-size:12px;
+                }
+
+                th {
+                    background:#f2f2f2;
+                    text-align:left;
+                }
+
+                .total {
+                    font-weight:bold;
+                    background:#f5f5f5;
+                }
+
+                .result {
+                    font-size:16px;
+                    font-weight:bold;
+                    padding:12px;
+                    border:2px solid #222;
+                    margin-top:15px;
+                }
+
+                .page-break {
+                    page-break-before:always;
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <h1>
+                BUSINESS ACCOUNTS
+            </h1>
+
+            <div style="
+                text-align:center;
+                color:#666;
+                font-size:12px;
+            ">
+                ${new Date().toLocaleDateString("en-IN")}
+            </div>
+
+
+            <h2>
+                Trial Balance
+            </h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Account</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    ${rows}
+
+                    <tr class="total">
+
+                        <td>
+                            TOTAL
+                        </td>
+
+                        <td style="text-align:right;">
+                            ${money(
+                                trial.reduce(
+                                    (s,x)=>s+x.debit,0
+                                )
+                            )}
+                        </td>
+
+                        <td style="text-align:right;">
+                            ${money(
+                                trial.reduce(
+                                    (s,x)=>s+x.credit,0
+                                )
+                            )}
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <div class="page-break"></div>
+
+
+            <h2>
+                Profit & Loss Account
+            </h2>
+
+
+            <h3>
+                Revenue
+            </h3>
+
+            <table>
+
+                ${incomeRows}
+
+                <tr class="total">
+
+                    <td>
+                        Total Revenue
+                    </td>
+
+                    <td style="text-align:right;">
+                        ${money(pl.totalIncome)}
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <h3>
+                Expenses
+            </h3>
+
+            <table>
+
+                ${expenseRows}
+
+                <tr class="total">
+
+                    <td>
+                        Total Expenses
+                    </td>
+
+                    <td style="text-align:right;">
+                        ${money(pl.totalExpense)}
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <div class="result">
+
+                ${pl.netProfit >= 0
+                    ? "NET PROFIT: "
+                    : "NET LOSS: "
+                }
+
+                ${money(Math.abs(pl.netProfit))}
+
+            </div>
+
+
+            <div class="page-break"></div>
+
+
+            <h2>
+                Balance Sheet
+            </h2>
+
+
+            <h3>
+                Assets
+            </h3>
+
+            <table>
+
+                ${assetRows}
+
+                <tr class="total">
+
+                    <td>
+                        TOTAL ASSETS
+                    </td>
+
+                    <td style="text-align:right;">
+                        ${money(bs.totalAssets)}
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <h3>
+                Liabilities
+            </h3>
+
+            <table>
+
+                ${liabilityRows}
+
+                <tr class="total">
+
+                    <td>
+                        Total Liabilities
+                    </td>
+
+                    <td style="text-align:right;">
+                        ${money(bs.totalLiabilities)}
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <h3>
+                Capital & Equity
+            </h3>
+
+            <table>
+
+                ${capitalRows}
+
+                <tr>
+
+                    <td>
+                        Current Profit/(Loss)
+                    </td>
+
+                    <td style="text-align:right;">
+                        ${money(bs.netProfit)}
+                    </td>
+
+                </tr>
+
+                <tr class="total">
+
+                    <td>
+                        Total Liabilities & Equity
+                    </td>
+
+                    <td style="text-align:right;">
+                        ${money(bs.totalLiabilitiesAndEquity)}
+                    </td>
+
+                </tr>
+
+            </table>
+
+        </body>
+
+        </html>
+
+    `);
+
+
+    printWindow.document.close();
+
+    printWindow.focus();
+
+
+    setTimeout(() => {
+
+        printWindow.print();
+
+    },300);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetData() {
+
+    const confirmed =
+        confirm(
+            "Reset all accounts and journal transactions?\n\nThis cannot be undone."
+        );
+
+
+    if (!confirmed) return;
+
+    const previousAccounts = accounts;
+    const previousJournals = journals;
+
+    accounts =
+        DEFAULT_ACCOUNTS.map(a => ({...a}));
+
+    journals = [];
+
+    const saved = saveData();
+
+    if (!saved) {
+
+        accounts = previousAccounts;
+        journals = previousJournals;
+
+        alert("Could not reset your data. Please try again.");
+
+        return;
+    }
+
+    currentTab = "journal";
+
+
+    document.querySelectorAll(".tab")
+        .forEach(button =>
+            button.classList.remove("active")
+        );
+
+
+    document
+        .getElementById("tab-journal")
+        .classList.add("active");
+
+
+    render();
+
+
+    alert("All accounting data has been reset.");
+}
+
+
+/* =========================================================
+   ORIENTATION
+   Uses the Screen Orientation API where available (most
+   desktop and mobile browsers support screen.orientation
+   for reading/watching orientation, even though "locking"
+   it is mobile-only). Falls back to matchMedia so this
+   still works in browsers without the API (e.g. Safari).
+   Toggles classes on <body> that the CSS above reacts to,
+   so layout adjusts live if a window is resized, a tablet
+   is rotated, or the browser is snapped narrow on desktop.
+========================================================= */
+
+function applyOrientationClasses() {
+
+    const isLandscape =
+        window.matchMedia("(orientation: landscape)").matches;
+
+    const isMobileWidth =
+        window.matchMedia("(max-width: 767px)").matches;
+
+    document.body.classList.toggle("is-landscape", isLandscape);
+    document.body.classList.toggle("is-portrait", !isLandscape);
+    document.body.classList.toggle("is-mobile", isMobileWidth);
+}
+
+
+function initOrientationWatcher() {
+
+    applyOrientationClasses();
+
+    // Screen Orientation API — available on most modern
+    // browsers (desktop Chrome/Edge included) for reading
+    // orientation and listening for changes.
+    if (window.screen && window.screen.orientation &&
+        typeof window.screen.orientation.addEventListener === "function") {
+
+        window.screen.orientation.addEventListener(
+            "change",
+            applyOrientationClasses
+        );
+
+    }
+
+    // matchMedia fallback / extra safety net — also catches
+    // a desktop browser window simply being resized, which
+    // the Orientation API alone won't report.
+    const orientationQuery =
+        window.matchMedia("(orientation: landscape)");
+
+    if (typeof orientationQuery.addEventListener === "function") {
+        orientationQuery.addEventListener("change", applyOrientationClasses);
+    } else if (typeof orientationQuery.addListener === "function") {
+        // Older Safari
+        orientationQuery.addListener(applyOrientationClasses);
+    }
+
+    window.addEventListener("resize", applyOrientationClasses);
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+function init() {
+
+    loadData();
+
+    initOrientationWatcher();
+
+    render();
+}
+
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+} else {
+    // DOMContentLoaded may already have fired if this script
+    // runs after the page has loaded (e.g. injected content) —
+    // in that case, run immediately instead of waiting forever.
+    init();
+}
+
+
+</script>
+
+
+
+</body></html>
